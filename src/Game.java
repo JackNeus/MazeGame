@@ -1,11 +1,23 @@
-public class Game {
+import javax.swing.JFrame;
+
+public class Game extends JFrame {
+	private static final long serialVersionUID = 1L;
 	public static boolean gameRunning = true;
 	public static int fps = 0;
 	public static long lastFpsTime = 0;
+	public static int width = 600, height = 600;
+
+	public Game() {
+		setTitle("MAZE SOLVER");
+		setSize(width, height);
+		setVisible(true);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
 
 	public static void main(String args[]) {
-		System.out.println("Abi sucks");
-		System.out.println("Abi is ok");
+		new Game();
+		gameloop();
 	}
 
 	public static void gameloop() {
@@ -32,7 +44,7 @@ public class Game {
 			render();
 
 			try {
-				Thread.sleep((lastLoopTime - System.nanoTime() + OPTIMAL_TIME) / 100000);
+				Thread.sleep((lastLoopTime - System.nanoTime() + OPTIMAL_TIME) / 1000000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
