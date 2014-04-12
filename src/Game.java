@@ -1,12 +1,14 @@
-public class Game 
-{
-	public static void main(String args[])
-	{
+public class Game {
+	public static void main(String args[]) {
 		System.out.println("Abi sucks");
 	}
-	
-	public static void update() //function triggered every frame
+
+	public static void update() // function triggered every frame
 	{
-		
+		render();
+	}
+
+	public static void render() {
+
 	}
 }
