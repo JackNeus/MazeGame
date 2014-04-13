@@ -5,7 +5,6 @@ import java.util.Queue;
 
 public class MazeSolver {
 	public int n, m;
-	public boolean[][] visited;
 	public int[][] camefrom;
 	
 	public int[] dirx = {-1, 0, 1, 0};
@@ -14,22 +13,21 @@ public class MazeSolver {
 	public MazeSolver(int n, int m) {
 		this.n = n;
 		this.m = m;
-		visited = new boolean[n][m];
 		camefrom = new int[n][m];
 	}
 	
 	public void bfs(int start, int end) {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				visited[i][j] = false;
+				Maze.visited[i][j] = false;
 			}
 		}
 		Queue<Integer> q = new LinkedList<Integer>();
 		q.add(start);
-		visited[start / m][start % m] = true;
+		Maze.visited[start / m][start % m] = true;
 		while (!q.isEmpty()) {
 			int next = q.remove();
-			visited[next / m][next % m] = true;
+			Maze.visited[next / m][next % m] = true;
 			if (next == end) {
 				return;
 			}
@@ -37,7 +35,7 @@ public class MazeSolver {
 				int newx = next / m + dirx[i];
 				int newy = next % m + diry[i];
 				if (newx < 0 || newx >= n || newy < 0 || newy >= m) continue;
-				if (Maze.adj[next][newx * m + newy] && !visited[newx][newy]) {
+				if (Maze.adj[next][newx * m + newy] && !Maze.visited[newx][newy]) {
 					q.add(newx * m + newy);
 					camefrom[newx][newy] = next;
 				}
