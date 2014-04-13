@@ -1,20 +1,36 @@
-import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Line2D;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Maze extends JFrame {
 	/*Window Variables*/
-	public static int width = 800, height = 600, margin = 100;
-	public static int tileSize = 20;
-	public static int xTiles = width / tileSize, yTiles = height / tileSize;
-	public static int numNodes;
+	public int width = 600, height = 400, margin = 100;
+	public int tileSize = 40;
+	public int xTiles = width / tileSize, yTiles = height / tileSize;
+	public int numNodes;
 	
-	public static boolean adj[][];
-	public static Node nodes[];
+	public boolean[][] adj;
+	public Node[] nodes;
 	
 	public Maze(){	
+		System.out.println(xTiles);
+		System.out.println(yTiles);
+		
 		setTitle("Maze Game");
-		setSize(width, height);
-		setResizable(false);
+		
+		JPanel jp = new JPanel();
+		jp.setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
+		this.getContentPane().add(jp);
+		this.pack();
+		//setSize(margin + width + margin, margin + height + margin);
+		
+		
+		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setBackground(Color.WHITE);
 		
@@ -29,15 +45,35 @@ public class Maze extends JFrame {
 				adj[i][j] = false;
 			}
 		}
+		genLines();
 		
 		setVisible(true);
 	}
 	
-	public static void drawMaze(){
-		
+	public Line2D[] lines;
+	public void genLines(){
+		lines = new Line2D[xTiles + 1 * yTiles + 1];
+		int pos = 0;
+		for(int i = 0; i < numNodes; i++){
+			if(nodes[i].x == 0){
+				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + margin,
+												nodes[i].y * tileSize + margin,
+												nodes[i].x * tileSize + margin,
+												nodes[i].y + 1 * tileSize + margin + tileSize);
+				System.out.println(nodes[i].y * tileSize + margin);
+				System.out.println(nodes[i].y * tileSize + margin + tileSize);
+			}
+		}
 	}
 	
-	public static void main(String args[]){
-		new Maze();
+	public void paint(Graphics g){
+		super.paint(g);
+		Graphics2D g2 = (Graphics2D) g;
+		for(int i = 0; i < lines.length; i++){
+			if(lines[i] != null){
+				g2.draw(lines[i]);
+			}
+		}
+		
 	}
 }
