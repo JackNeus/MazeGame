@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class Maze extends JFrame {
 	/*Window Variables*/
 	public static int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public static int tileSize = 20;
+	public static int tileSize = 5;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
@@ -43,7 +43,7 @@ public class Maze extends JFrame {
 			nodes[i] = new Node(i % xTiles, i / xTiles, i);
 		}
 		for(int i = 0; i < numNodes; i++) {
-			for(int j = 0; j < numNodes; j++){ 
+			for(int j = 0; j < numNodes; j++) { 
 				adj[i][j] = false;
 			}
 		}
@@ -63,7 +63,7 @@ public class Maze extends JFrame {
 			int id = (int) Math.floor(Math.random() * numNodes);
 			int dir = (int) Math.floor(Math.random() * 4);
 			
-			for(int i = 0; i < 4; i++){
+			for(int i = 0; i < 4; i++) {
 				dir = (dir + 1) % 4;
 				if(dir == 0 && nodes[id].x == 0) continue;
 				if(dir == 1 && nodes[id].x == xTiles - 1) continue;
@@ -93,21 +93,19 @@ public class Maze extends JFrame {
 	public void genLines() {
 		lines = new Line2D[(xTiles + 1) * (yTiles + 1) * 2];
 		int pos = 0;
-		for(int i = 0; i < numNodes; i++){
-			if(nodes[i].x == 0 || !adj[i][i - 1]){
+		for(int i = 0; i < numNodes; i++) {
+			if(nodes[i].x == 0 || !adj[i][i - 1]) {
 				if(i == entry) entryl = pos;
 				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + adjustx,
 												nodes[i].y * tileSize + adjusty,
 												nodes[i].x * tileSize + adjustx,
 												nodes[i].y * tileSize + adjusty + tileSize);
-			
 			}
 			if(nodes[i].y == 0 || !adj[i][i - xTiles]) {
 				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + adjustx,
 												nodes[i].y * tileSize + adjusty,
 												nodes[i].x * tileSize + adjustx + tileSize,
 												nodes[i].y * tileSize + adjusty);
-
 			}
 		}
 		for(int i = 0; i < xTiles; i++) {
@@ -116,7 +114,7 @@ public class Maze extends JFrame {
 											i * tileSize + adjustx + tileSize,
 											adjusty + height);
 		}
-		for(int i = 0; i < yTiles; i++){
+		for(int i = 0; i < yTiles; i++) {
 			if((i + 1) * xTiles - 1 == exit) exitl = pos;
 			lines[pos++] = new Line2D.Float(adjustx + width,
 											i * tileSize + adjusty,
@@ -128,20 +126,21 @@ public class Maze extends JFrame {
 	}
 	
 	public void drawPath(Graphics2D g) {
-		int next = exit;
+		int next = exit, last = exit;
 		g.setColor(Color.RED);
-		g.fillRect(adjustx + exit % xTiles * tileSize + 3, adjusty + exit / xTiles * tileSize + 3, tileSize - 5, tileSize - 5);
+		//g.fillRect(adjustx + exit % xTiles * tileSize + 2, adjusty + exit / xTiles * tileSize + 3, tileSize - 3, tileSize - 3);
 		while (next != entry) {
 			next = solver.camefrom[next / xTiles][next % xTiles];
-			System.out.println(next);
-			g.fillRect(adjustx + next % xTiles * tileSize + 3, adjusty + next / xTiles * tileSize + 3, tileSize - 5, tileSize - 5);
-		}
-		/*for (int i = 0; i < solver.n; i++) {
-			for (int j = 0; j < solver.m; j++) {
-				System.out.print(solver.camefrom[i][j] + " ");
+			//g.fillRect(adjustx + next % xTiles * tileSize + 2, adjusty + next / xTiles * tileSize + 2, tileSize - 3, tileSize - 3);
+			if (Math.abs(next - last) > 1) {
+				g.drawLine(adjustx + next % xTiles * tileSize + tileSize / 2, adjusty + next / xTiles * tileSize + tileSize / 2, 
+						adjustx + last % xTiles * tileSize + tileSize / 2, adjusty + last / xTiles * tileSize + tileSize / 2);
+			} else {
+				g.drawLine(adjustx + next % xTiles * tileSize  + tileSize / 2, adjusty + next / xTiles * tileSize + tileSize / 2, 
+						adjustx + last % xTiles * tileSize + tileSize / 2, adjusty + last / xTiles * tileSize + tileSize / 2);
 			}
-			System.out.println();
-		} */
+			last = next;
+		}
 	}
 	
 	public void paint(Graphics g) {
@@ -150,15 +149,15 @@ public class Maze extends JFrame {
 		g2.setColor(Color.WHITE);
 		g2.fillRect(adjustx, adjusty, width, height);
 		g2.setColor(Color.BLACK);
-		for(int i = 0; i < lines.length; i++){
-			if(i == entryl || i == exitl){
+		for(int i = 0; i < lines.length; i++) {
+			if(i == entryl || i == exitl) {
 				g2.setColor(Color.RED);
 				g2.draw(lines[i]);
 				if(i == entryl) g2.fillRect((int) lines[i].getX1() - 3, (int) lines[i].getY1(), (int) 3, (int) (lines[i].getY2() - lines[i].getY1()));
 				else g2.fillRect((int) lines[i].getX1(), (int) lines[i].getY1(), (int) 3, (int) (lines[i].getY2() - lines[i].getY1()));
 				g2.setColor(Color.BLACK);
 			}
-			else if(lines[i] != null){
+			else if(lines[i] != null) {
 				g2.draw(lines[i]);
 			}
 		}
