@@ -28,6 +28,9 @@ public class Robot {
 			pos = pos + dirs[l];
 			dir = l;
 		}
+		else{
+			dir = (dir + 1) % 4;
+		}
 		solve();
 	}
 }

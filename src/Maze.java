@@ -10,12 +10,13 @@ import javax.swing.JPanel;
 public class Maze extends JFrame {
 	/*Window Variables*/
 	public static int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public static int tileSize = 10;
+	public static int tileSize = 100;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
 	public UnionFind joiner;
 	public MazeSolver solver;
+	public Robot robot;
 	
 	public static boolean[][] adj;
 	public Node[] nodes;
@@ -52,6 +53,8 @@ public class Maze extends JFrame {
 		setVisible(true);
 		solver = new MazeSolver(yTiles, xTiles);
 		solver.bfs(entry, exit);
+		robot = new Robot(this);
+		robot.solve();
 	}
 	
 	int dirs[];
