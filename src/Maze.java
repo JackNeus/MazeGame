@@ -26,7 +26,7 @@ public class Maze extends JFrame {
 		
 		JPanel jp = new JPanel();
 		jp.setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
-		jp.setBackground(Color.GREEN);
+		jp.setBackground(Color.LIGHT_GRAY);
 		this.getContentPane().add(jp);
 		this.pack();
 		adjusty = margin + getInsets().top;
@@ -34,7 +34,6 @@ public class Maze extends JFrame {
 		
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		getContentPane().setBackground(Color.GREEN);
 		
 		numNodes = xTiles * yTiles;
 		adj = new boolean[numNodes][numNodes];
