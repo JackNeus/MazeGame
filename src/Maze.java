@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 
 public class Maze extends JFrame {
 	/*Window Variables*/
-	public static int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public static int tileSize = 5;
+	public int width = 600, height = 400, margin = 100, adjusty, adjustx;
+	public int tileSize = 5;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
@@ -30,6 +30,8 @@ public class Maze extends JFrame {
 		this.width = width;
 		this.height = height;
 		this.tileSize = tileSize;
+		this.xTiles = width / tileSize;
+		this.yTiles = height / tileSize;
 		
 		robot = new Robot(this);
 		
