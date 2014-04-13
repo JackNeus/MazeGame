@@ -1,5 +1,5 @@
 public class UnionFind {
-	public int n, m, components = n * m;
+	public int n, m, components;
 	public boolean[][] visited;
 	/**
 	 * First parameter is going to be component size, the second is going to be
@@ -13,6 +13,7 @@ public class UnionFind {
 	public UnionFind(int n, int m) {
 		this.n = n;
 		this.m = m;
+		components = n * m;
 		visited = new boolean[n][m];
 		component = new int[n * m][2];
 		for (int i = 0; i < n * m; i++) {
@@ -39,13 +40,13 @@ public class UnionFind {
 
 	public void floodfill(int key, int x, int y) {
 		visited[x][y] = true;
-		component[x * n + y][1] = key;
+		component[x * m + y][1] = key;
 		for (int i = 0; i < 4; i++) {
 			int newx = x + dirx[i];
 			int newy = y + diry[i];
-			if (newx >= 0 && newx < n && newy >= 0 && newy < m
+			if (newx >= 0 && newx < m && newy >= 0 && newy < n
 					&& !visited[newx][newy]
-					&& component[newx * n + newy][1] == component[x][y]) {
+					&& component[newx * m + newy][1] == component[x][y]) {
 				floodfill(key, newx, newy);
 			}
 		}

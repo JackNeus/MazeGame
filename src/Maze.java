@@ -62,10 +62,13 @@ public class Maze extends JFrame {
 				if(dir == 0 && nodes[id].x == 0) continue;
 				if(dir == 1 && nodes[id].x == xTiles - 1) continue;
 				if(dir == 2 && nodes[id].y == yTiles - 1) continue;
-				if(dir == 4 && nodes[id].y == 0) continue;
-				if(joiner.component[nodes[id].x][nodes[id].y] == joiner.component[nodes[id + dirs[dir]].x][nodes[id + dirs[dir]].y]) continue;
+				if(dir == 3 && nodes[id].y == 0) continue;
+				int nid = id + dirs[dir];
+				if(joiner.component[id][1] == joiner.component[nid][1]) continue;
+				System.out.println(id + " " + nid + " " + joiner.components);
 				adj[id][id + dirs[dir]] = true;
-				joiner.union(nodes[id], nodes[id + dirs[dir]]);
+				joiner.union(nodes[id], nodes[nid]);
+				break;
 			}
 		}
 	}
