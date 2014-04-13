@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class Maze extends JFrame {
 	/*Window Variables*/
 	public int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public int tileSize = 10;
+	public int tileSize = 5;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
@@ -18,6 +18,8 @@ public class Maze extends JFrame {
 	
 	public boolean[][] adj;
 	public Node[] nodes;
+	public int entry, exit;
+	
 	
 	public Maze(){	
 		setTitle("Maze Game");
@@ -79,7 +81,11 @@ public class Maze extends JFrame {
 				break;
 			}
 		}
+		
+		entry = (int) (Math.floor(Math.random() * yTiles)) * xTiles;
+		exit = (int) (Math.floor(Math.random() * yTiles) + 1) * xTiles - 1;
 	}
+	
 	
 	public Line2D[] lines;
 	public void genLines(){
@@ -87,10 +93,12 @@ public class Maze extends JFrame {
 		int pos = 0;
 		for(int i = 0; i < numNodes; i++){
 			if(nodes[i].x == 0 || !adj[i][i - 1]){
-				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + adjustx,
-												nodes[i].y * tileSize + adjusty,
-												nodes[i].x * tileSize + adjustx,
-												nodes[i].y * tileSize + adjusty + tileSize);
+				if(i != entry && i != exit){
+					lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + adjustx,
+													nodes[i].y * tileSize + adjusty,
+													nodes[i].x * tileSize + adjustx,
+													nodes[i].y * tileSize + adjusty + tileSize);
+				}
 			}
 			if(nodes[i].y == 0 || !adj[i][i - xTiles]){
 				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + adjustx,
@@ -107,6 +115,7 @@ public class Maze extends JFrame {
 											adjusty + height);
 		}
 		for(int i = 0; i < yTiles; i++){
+			if((i + 1) * xTiles - 1 == entry || (i + 1) * xTiles - 1 == exit) continue;
 			lines[pos++] = new Line2D.Float(adjustx + width,
 											i * tileSize + adjusty,
 											adjustx + width,
