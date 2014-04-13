@@ -141,6 +141,32 @@ public class Maze extends JFrame {
 			}
 			last = next;
 		}
+		if (entry % xTiles == 0) {
+			g.drawLine(adjustx, adjusty + entry / xTiles * tileSize + tileSize / 2, 
+					adjustx + tileSize / 2, adjusty + entry / xTiles * tileSize + tileSize / 2);
+		} else if (entry % xTiles == xTiles - 1) {
+			g.drawLine(adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + entry / xTiles * tileSize + tileSize / 2, 
+					adjustx + entry % xTiles * (tileSize + 1), adjusty + entry / xTiles * tileSize + tileSize / 2);
+		} else if (entry < xTiles) {
+			g.drawLine(adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty, 
+					adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + tileSize / 2);
+		} else {
+			g.drawLine(adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + entry / xTiles * tileSize + tileSize / 2, 
+					adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + entry / xTiles * (tileSize + 1));
+		}
+		if (exit % xTiles == 0) {
+			g.drawLine(adjustx, adjusty + exit / xTiles * tileSize + tileSize / 2, 
+					adjustx + tileSize / 2, adjusty + exit / xTiles * tileSize + tileSize / 2);
+		} else if (exit % xTiles == xTiles - 1) {
+			g.drawLine(adjustx + exit % xTiles * tileSize + tileSize / 2, adjusty + exit / xTiles * tileSize + tileSize / 2, 
+					adjustx + exit % xTiles * tileSize + tileSize, adjusty + exit / xTiles * tileSize + tileSize / 2);
+		} else if (exit < xTiles) {
+			g.drawLine(adjustx + exit % xTiles * tileSize + tileSize / 2, adjusty, 
+					adjustx + exit % xTiles * tileSize + tileSize / 2, adjusty + tileSize / 2);
+		} else {
+			g.drawLine(adjustx + exit % xTiles * tileSize + tileSize / 2, adjusty + exit / xTiles * tileSize + tileSize / 2, 
+					adjustx + exit % xTiles * tileSize + tileSize / 2, adjusty + exit / xTiles * tileSize + tileSize);
+		}
 	}
 	
 	public void paint(Graphics g) {
