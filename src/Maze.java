@@ -13,13 +13,13 @@ public class Maze extends JFrame {
 	public int tileSize = 40;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
+
+	public UnionFind joiner;
 	
 	public boolean[][] adj;
 	public Node[] nodes;
 	
 	public Maze(){	
-		System.out.println(xTiles);
-		
 		setTitle("Maze Game");
 		
 		JPanel jp = new JPanel();
@@ -44,9 +44,15 @@ public class Maze extends JFrame {
 				adj[i][j] = false;
 			}
 		}
+		joiner = new UnionFind(xTiles, yTiles);
+		genMaze();
 		genLines();
 		
 		setVisible(true);
+	}
+	
+	public void genMaze(){
+		
 	}
 	
 	public Line2D[] lines;
