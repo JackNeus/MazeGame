@@ -16,7 +16,7 @@ public class Maze extends JFrame {
 		setSize(width, height);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setBackground(Color.RED);
+		getContentPane().setBackground(Color.WHITE);
 		
 		numNodes = xTiles * yTiles;
 		adj = new boolean[numNodes][numNodes];
@@ -24,8 +24,17 @@ public class Maze extends JFrame {
 		for(int i = 0; i < numNodes; i++){
 			nodes[i] = new Node(i % xTiles, i / yTiles, i);
 		}
+		for(int i = 0; i < numNodes; i++){
+			for(int j = 0; j < numNodes; j++){
+				adj[i][j] = false;
+			}
+		}
 		
 		setVisible(true);
+	}
+	
+	public static void drawMaze(){
+		
 	}
 	
 	public static void main(String args[]){
