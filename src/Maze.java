@@ -22,9 +22,8 @@ public class Maze extends JFrame {
 	public int entry, exit, entryl, exitl;
 	
 	
-	public Maze() {	
+	public Maze() {
 		setTitle("Maze Game");
-		
 		JPanel jp = new JPanel();
 		jp.setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
 		jp.setBackground(Color.LIGHT_GRAY);
@@ -146,13 +145,13 @@ public class Maze extends JFrame {
 					adjustx + tileSize / 2, adjusty + entry / xTiles * tileSize + tileSize / 2);
 		} else if (entry % xTiles == xTiles - 1) {
 			g.drawLine(adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + entry / xTiles * tileSize + tileSize / 2, 
-					adjustx + entry % xTiles * (tileSize + 1), adjusty + entry / xTiles * tileSize + tileSize / 2);
+					adjustx + entry % xTiles * tileSize + tileSize, adjusty + entry / xTiles * tileSize + tileSize / 2);
 		} else if (entry < xTiles) {
 			g.drawLine(adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty, 
 					adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + tileSize / 2);
 		} else {
 			g.drawLine(adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + entry / xTiles * tileSize + tileSize / 2, 
-					adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + entry / xTiles * (tileSize + 1));
+					adjustx + entry % xTiles * tileSize + tileSize / 2, adjusty + entry / xTiles * tileSize + tileSize);
 		}
 		if (exit % xTiles == 0) {
 			g.drawLine(adjustx, adjusty + exit / xTiles * tileSize + tileSize / 2, 
