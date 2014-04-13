@@ -44,9 +44,9 @@ public class UnionFind {
 		for (int i = 0; i < 4; i++) {
 			int newx = x + dirx[i];
 			int newy = y + diry[i];
-			if (newx >= 0 && newx < m && newy >= 0 && newy < n
+			if (newx >= 0 && newx < n && newy >= 0 && newy < m
 					&& !visited[newx][newy]
-					&& component[newx * m + newy][1] == component[x][y]) {
+					&& component[newx * m + newy][1] == component[x * m + y][1]) {
 				floodfill(key, newx, newy);
 			}
 		}
