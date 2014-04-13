@@ -176,7 +176,6 @@ public class Maze extends JFrame {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.WHITE);
 		g2.fillRect(adjustx, adjusty, width, height);
-		if(robot != null) robot.solve(g2);
 		g2.setColor(Color.BLACK);
 		for(int i = 0; i < lines.length; i++) {
 			if(i == entryl || i == exitl) {
@@ -190,6 +189,7 @@ public class Maze extends JFrame {
 				g2.draw(lines[i]);
 			}
 		}
+		if(robot != null) robot.solve(g2);
 		drawPath(g2);
 	}
 }
