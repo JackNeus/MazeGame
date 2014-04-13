@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 public class Robot {
 	int[] dirs = new int[]{1, 1, -1, -1};
 	Maze maze;
@@ -13,25 +16,29 @@ public class Robot {
 		dirs[3] *= maze.xTiles;
 	}
 	
-	public void solve(){
-		if(pos == maze.exit) return;
-		int r = (dir + 1) % 4, l = dir - 1;
-		if(l == -1) l = 3;
-		if(pos + dirs[r] >= 0 && pos + dirs[r] < maze.numNodes && maze.adj[pos][pos + dirs[r]]){
-			pos = pos + dirs[r];
-			dir = r;
+	public void solve(Graphics2D g2){
+		while(true){
+			if(pos == maze.exit) break;
+			g2.setColor(Color.YELLOW);
+			g2.fillRect(pos % maze.xTiles * maze.tileSize + maze.adjustx, pos / maze.xTiles * maze.tileSize + maze.adjusty, maze.tileSize, maze.tileSize);
+			//System.out.println(pos + " " + dir);
+			int r = (dir + 1) % 4, l = dir - 1;
+			if(l == -1) l = 3;
+			if(pos + dirs[r] >= 0 && pos + dirs[r] < maze.numNodes && maze.adj[pos][pos + dirs[r]]){
+				pos = pos + dirs[r];
+				dir = r;
+			}
+			else if(pos + dirs[dir] >= 0 && pos + dirs[dir] < maze.numNodes && maze.adj[pos][pos + dirs[dir]]){
+				pos = pos + dirs[dir];
+			}
+			else if(pos + dirs[l] > 0 && pos + dirs[l] < maze.numNodes && maze.adj[pos][pos + dirs[l]]){
+				pos = pos + dirs[l];
+				dir = l;
+			}
+			else{
+				dir = (dir + 1) % 4;
+			}
 		}
-		else if(pos + dirs[dir] >= 0 && pos + dirs[dir] < maze.numNodes && maze.adj[pos][pos + dirs[dir]]){
-			pos = pos + dirs[dir];
-		}
-		else if(pos + dirs[l] > 0 && pos + dirs[l] < maze.numNodes && maze.adj[pos][pos + dirs[l]]){
-			pos = pos + dirs[l];
-			dir = l;
-		}
-		else{
-			dir = (dir + 1) % 4;
-		}
-		solve();
 	}
 }
 

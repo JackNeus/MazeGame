@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class Maze extends JFrame {
 	/*Window Variables*/
 	public static int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public static int tileSize = 100;
+	public static int tileSize = 5;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
@@ -24,6 +24,8 @@ public class Maze extends JFrame {
 	
 	
 	public Maze() {
+		robot = new Robot(this);
+		
 		setTitle("Maze Game");
 		JPanel jp = new JPanel();
 		jp.setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
@@ -53,8 +55,6 @@ public class Maze extends JFrame {
 		setVisible(true);
 		solver = new MazeSolver(yTiles, xTiles);
 		solver.bfs(entry, exit);
-		robot = new Robot(this);
-		robot.solve();
 	}
 	
 	int dirs[];
@@ -176,6 +176,7 @@ public class Maze extends JFrame {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.WHITE);
 		g2.fillRect(adjustx, adjusty, width, height);
+		if(robot != null) robot.solve(g2);
 		g2.setColor(Color.BLACK);
 		for(int i = 0; i < lines.length; i++) {
 			if(i == entryl || i == exitl) {
