@@ -18,8 +18,8 @@ public class Robot {
 	
 	public void solve(Graphics2D g2){
 		while(true){
-			if(pos == maze.exit) break;
 			g2.setColor(new Color(255, 255, 0, 64));
+			if(pos == maze.exit) break;
 			g2.fillRect(pos % maze.xTiles * maze.tileSize + maze.adjustx, pos / maze.xTiles * maze.tileSize + maze.adjusty, maze.tileSize, maze.tileSize);
 			//System.out.println(pos + " " + dir);
 			int r = (dir + 1) % 4, l = dir - 1;

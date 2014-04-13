@@ -9,8 +9,9 @@ import javax.swing.JPanel;
 
 public class Maze extends JFrame {
 	/*Window Variables*/
-	public static int width = 1000, height = 1000, margin = 100, adjusty, adjustx;
-	public static int tileSize = 5;
+	public int width = 600, height = 400, margin = 100, adjusty, adjustx;
+	public int tileSize = 5;
+	
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
@@ -23,9 +24,17 @@ public class Maze extends JFrame {
 	public Node[] nodes;
 	public int entry, exit, entryl, exitl;
 	
-	public boolean isPaused = false;
+	public Maze(){
+		this(600, 400, 5);
+	}
 	
-	public Maze() {
+	public Maze(int width, int height, int tileSize) {
+		this.width = width;
+		this.height = height;
+		this.tileSize = tileSize;
+		this.xTiles = width / tileSize;
+		this.yTiles = height / tileSize;
+		
 		robot = new Robot(this);
 		
 		setTitle("Maze Game");
@@ -41,7 +50,6 @@ public class Maze extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		numNodes = xTiles * yTiles;
-		System.out.println(xTiles + " " + yTiles);
 		visited = new boolean[yTiles][xTiles];
 		adj = new boolean[numNodes][numNodes];
 		nodes = new Node[numNodes];
@@ -54,9 +62,7 @@ public class Maze extends JFrame {
 			}
 		}
 		joiner = new UnionFind(yTiles, xTiles);
-		System.out.println("HERE");
 		genMaze();
-		System.out.println("HERE");
 		genLines();
 		setVisible(true);
 		solver = new MazeSolver(yTiles, xTiles);
@@ -174,9 +180,6 @@ public class Maze extends JFrame {
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		if (isPaused) {
-			return;
-		}
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.WHITE);
 		g2.fillRect(adjustx, adjusty, width, height);
