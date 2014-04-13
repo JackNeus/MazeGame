@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class Maze extends JFrame {
 	/*Window Variables*/
 	public static int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public static int tileSize = 5;
+	public static int tileSize = 10;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
@@ -177,11 +177,11 @@ public class Maze extends JFrame {
 		g2.setColor(Color.BLACK);
 		for(int i = 0; i < lines.length; i++) {
 			if(i == entryl || i == exitl) {
-				g2.setColor(Color.RED);
+				/*g2.setColor(Color.RED);
 				g2.draw(lines[i]);
 				if(i == entryl) g2.fillRect((int) lines[i].getX1() - 3, (int) lines[i].getY1(), (int) 3, (int) (lines[i].getY2() - lines[i].getY1()));
 				else g2.fillRect((int) lines[i].getX1(), (int) lines[i].getY1(), (int) 3, (int) (lines[i].getY2() - lines[i].getY1()));
-				g2.setColor(Color.BLACK);
+				g2.setColor(Color.BLACK);*/
 			}
 			else if(lines[i] != null) {
 				g2.draw(lines[i]);
