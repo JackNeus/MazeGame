@@ -38,7 +38,7 @@ public class Maze extends JFrame {
 		adj = new boolean[numNodes][numNodes];
 		nodes = new Node[numNodes];
 		for(int i = 0; i < numNodes; i++){
-			nodes[i] = new Node(i % xTiles, i / yTiles, i);
+			nodes[i] = new Node(i % xTiles, i / xTiles, i);
 		}
 		for(int i = 0; i < numNodes; i++){
 			for(int j = 0; j < numNodes; j++){
@@ -52,16 +52,24 @@ public class Maze extends JFrame {
 	
 	public Line2D[] lines;
 	public void genLines(){
-		lines = new Line2D[xTiles + 1 * yTiles + 1];
+		lines = new Line2D[(xTiles + 1) * (yTiles + 1) * 2];
 		int pos = 0;
 		for(int i = 0; i < numNodes; i++){
-			if(nodes[i].x == 0){
+			if(nodes[i].x == 0 || !adj[i][i - 1]){
 				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + margin,
 												nodes[i].y * tileSize + margin,
 												nodes[i].x * tileSize + margin,
-												nodes[i].y + 1 * tileSize + margin + tileSize);
+												nodes[i].y * tileSize + margin + tileSize);
 				System.out.println(nodes[i].y * tileSize + margin);
 				System.out.println(nodes[i].y * tileSize + margin + tileSize);
+				System.out.println(nodes[i].y);
+			}
+			if(nodes[i].y == 0 || !adj[i][i - xTiles]){
+				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + margin,
+												nodes[i].y * tileSize + margin,
+												nodes[i].x * tileSize + margin + tileSize,
+												nodes[i].y * tileSize + margin);
+
 			}
 		}
 	}
