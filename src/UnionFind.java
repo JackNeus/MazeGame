@@ -10,7 +10,7 @@ public class UnionFind {
 	public static int[] dirx = { 1, 0, -1, 0 };
 	public static int[] diry = { 0, 1, 0, -1 };
 
-	public UnionFind(int n, int m) {
+	public UnionFind(int m, int n) {
 		this.n = n;
 		this.m = m;
 		components = n * m;
@@ -30,23 +30,26 @@ public class UnionFind {
 			}
 		}
 		if (component[x.id][0] > component[y.id][0]) {
-			floodfill(component[x.id][1], y.x, y.y);
 			component[x.id][0] += component[y.id][0];
 			component[y.id][0] = component[x.id][0];
+			floodfill(component[x.id][1], y.x, y.y);
 		} else {
+			component[y.id][0] += component[x.id][0];
+			component[x.id][0] = component[y.id][0];
 			floodfill(component[y.id][1], x.x, x.y);
 		}
 	}
 
 	public void floodfill(int key, int x, int y) {
-		visited[x][y] = true;
-		component[x * m + y][1] = key;
+		visited[y][x] = true;
+		int oldKey = component[y * m + x][1];
+		component[y * m + x][1] = key;
 		for (int i = 0; i < 4; i++) {
 			int newx = x + dirx[i];
 			int newy = y + diry[i];
-			if (newx >= 0 && newx < n && newy >= 0 && newy < m
-					&& !visited[newx][newy]
-					&& component[newx * m + newy][1] == component[x * m + y][1]) {
+			if (newx >= 0 && newx < m && newy >= 0 && newy < n
+					&& !visited[newy][newx]
+					&& component[newy * m + newx][1] == oldKey) {
 				floodfill(key, newx, newy);
 			}
 		}

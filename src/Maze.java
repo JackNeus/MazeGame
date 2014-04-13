@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class Maze extends JFrame {
 	/*Window Variables*/
 	public int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public int tileSize = 40;
+	public int tileSize = 10;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
@@ -54,19 +54,27 @@ public class Maze extends JFrame {
 	int dirs[];
 	public void genMaze(){
 		dirs = new int[]{-1, 1, xTiles, -xTiles};
+		
 		while(joiner.components > 1){
 			int id = (int) Math.floor(Math.random() * numNodes);
 			int dir = (int) Math.floor(Math.random() * 4);
+			
 			for(int i = 0; i < 4; i++){
 				dir = (dir + 1) % 4;
 				if(dir == 0 && nodes[id].x == 0) continue;
 				if(dir == 1 && nodes[id].x == xTiles - 1) continue;
 				if(dir == 2 && nodes[id].y == yTiles - 1) continue;
 				if(dir == 3 && nodes[id].y == 0) continue;
+				
 				int nid = id + dirs[dir];
+				if(adj[id][nid] || adj[nid][id]) continue;
 				if(joiner.component[id][1] == joiner.component[nid][1]) continue;
-				System.out.println(id + " " + nid + " " + joiner.components);
-				adj[id][id + dirs[dir]] = true;
+				
+				//System.out.println(id + " " + nid + " " + joiner.component[id][1] + " " + joiner.component[nid][1] + " "+  joiner.components);
+				
+				adj[id][nid] = true;
+				adj[nid][id] = true;
+				
 				joiner.union(nodes[id], nodes[nid]);
 				break;
 			}
