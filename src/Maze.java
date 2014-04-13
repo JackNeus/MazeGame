@@ -10,11 +10,12 @@ import javax.swing.JPanel;
 public class Maze extends JFrame {
 	/*Window Variables*/
 	public static int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public static int tileSize = 5;
+	public static int tileSize = 20;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
 	public UnionFind joiner;
+	public MazeSolver solver;
 	
 	public static boolean[][] adj;
 	public Node[] nodes;
@@ -49,8 +50,9 @@ public class Maze extends JFrame {
 		joiner = new UnionFind(xTiles, yTiles);
 		genMaze();
 		genLines();
-		
 		setVisible(true);
+		solver = new MazeSolver(yTiles, xTiles);
+		solver.bfs(entry, exit);
 	}
 	
 	int dirs[];
@@ -125,6 +127,23 @@ public class Maze extends JFrame {
 		//lines[pos++] = new Line2D.Float(adjustx + width, adjusty, adjustx + width, adjusty + height);
 	}
 	
+	public void drawPath(Graphics2D g) {
+		int next = exit;
+		g.setColor(Color.RED);
+		g.fillRect(adjustx + exit % xTiles * tileSize + 3, adjusty + exit / xTiles * tileSize + 3, tileSize - 5, tileSize - 5);
+		while (next != entry) {
+			next = solver.camefrom[next / xTiles][next % xTiles];
+			System.out.println(next);
+			g.fillRect(adjustx + next % xTiles * tileSize + 3, adjusty + next / xTiles * tileSize + 3, tileSize - 5, tileSize - 5);
+		}
+		/*for (int i = 0; i < solver.n; i++) {
+			for (int j = 0; j < solver.m; j++) {
+				System.out.print(solver.camefrom[i][j] + " ");
+			}
+			System.out.println();
+		} */
+	}
+	
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -143,6 +162,6 @@ public class Maze extends JFrame {
 				g2.draw(lines[i]);
 			}
 		}
-		
+		drawPath(g2);
 	}
 }
