@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 public class Maze extends JFrame {
 	/*Window Variables*/
-	public int width = 600, height = 400, margin = 100;
+	public int width = 600, height = 400, margin = 100, adjusty, adjustx;
 	public int tileSize = 40;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
@@ -19,7 +19,6 @@ public class Maze extends JFrame {
 	
 	public Maze(){	
 		System.out.println(xTiles);
-		System.out.println(yTiles);
 		
 		setTitle("Maze Game");
 		
@@ -27,8 +26,8 @@ public class Maze extends JFrame {
 		jp.setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
 		this.getContentPane().add(jp);
 		this.pack();
-		//setSize(margin + width + margin, margin + height + margin);
-		
+		adjusty = margin + getInsets().top;
+		adjustx = margin + getInsets().left;
 		
 		setResizable(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -56,22 +55,33 @@ public class Maze extends JFrame {
 		int pos = 0;
 		for(int i = 0; i < numNodes; i++){
 			if(nodes[i].x == 0 || !adj[i][i - 1]){
-				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + margin,
-												nodes[i].y * tileSize + margin,
-												nodes[i].x * tileSize + margin,
-												nodes[i].y * tileSize + margin + tileSize);
-				System.out.println(nodes[i].y * tileSize + margin);
-				System.out.println(nodes[i].y * tileSize + margin + tileSize);
-				System.out.println(nodes[i].y);
+				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + adjustx,
+												nodes[i].y * tileSize + adjusty,
+												nodes[i].x * tileSize + adjustx,
+												nodes[i].y * tileSize + adjusty + tileSize);
 			}
 			if(nodes[i].y == 0 || !adj[i][i - xTiles]){
-				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + margin,
-												nodes[i].y * tileSize + margin,
-												nodes[i].x * tileSize + margin + tileSize,
-												nodes[i].y * tileSize + margin);
+				lines[pos++] = new Line2D.Float(nodes[i].x * tileSize + adjustx,
+												nodes[i].y * tileSize + adjusty,
+												nodes[i].x * tileSize + adjustx + tileSize,
+												nodes[i].y * tileSize + adjusty);
 
 			}
 		}
+		for(int i = 0; i < xTiles; i++){
+			lines[pos++] = new Line2D.Float(i * tileSize + adjustx,
+											adjusty + height,
+											i * tileSize + adjustx + tileSize,
+											adjusty + height);
+		}
+		for(int i = 0; i < yTiles; i++){
+			lines[pos++] = new Line2D.Float(adjustx + width,
+											i * tileSize + adjusty,
+											adjustx + width,
+											i * tileSize + adjusty + tileSize);
+		}
+		//lines[pos++] = new Line2D.Float(adjustx, adjusty + height, adjustx + width, adjusty + height);
+		//lines[pos++] = new Line2D.Float(adjustx + width, adjusty, adjustx + width, adjusty + height);
 	}
 	
 	public void paint(Graphics g){
