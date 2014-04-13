@@ -15,11 +15,9 @@ public class UnionFind {
 		this.m = m;
 		visited = new boolean[n][m];
 		component = new int[n * m][2];
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				component[i * n + j][1] = i * n + j;
-				component[i * n + j][0] = 1;
-			}
+		for (int i = 0; i < n * m; i++) {
+			component[i][1] = i;
+			component[i][0] = 1;
 		}
 	}
 
@@ -30,12 +28,12 @@ public class UnionFind {
 				visited[i][j] = false;
 			}
 		}
-		if (component[x.x * n + x.y][0] > component[y.x * n + y.y][0]) {
-			floodfill(component[x.x * n + x.y][1], y.x, y.y);
-			component[x.x * n + x.y][0] += component[y.x * n + y.y][0];
-			component[y.x * n + y.y][0] = component[x.x * n + x.y][0];
+		if (component[x.id][0] > component[y.id][0]) {
+			floodfill(component[x.id][1], y.x, y.y);
+			component[x.id][0] += component[y.id][0];
+			component[y.id][0] = component[x.id][0];
 		} else {
-			floodfill(component[y.x * n + y.y][1], x.x, x.y);
+			floodfill(component[y.id][1], x.x, x.y);
 		}
 	}
 
