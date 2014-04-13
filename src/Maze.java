@@ -9,14 +9,14 @@ import javax.swing.JPanel;
 
 public class Maze extends JFrame {
 	/*Window Variables*/
-	public int width = 600, height = 400, margin = 100, adjusty, adjustx;
-	public int tileSize = 5;
+	public static int width = 600, height = 400, margin = 100, adjusty, adjustx;
+	public static int tileSize = 5;
 	public int xTiles = width / tileSize, yTiles = height / tileSize;
 	public int numNodes;
 
 	public UnionFind joiner;
 	
-	public boolean[][] adj;
+	public static boolean[][] adj;
 	public Node[] nodes;
 	public int entry, exit;
 	
