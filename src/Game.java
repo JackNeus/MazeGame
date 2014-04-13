@@ -4,12 +4,19 @@ public class Game {
 		System.out.println("Abi is ok");
 	}
 
-	public static void update() // function triggered every frame
-	{
-		render();
+	public static void Initialize(){ //initialize variables, etc 
+		//TODO: WRITE UPDATE CODE
+		
+		draw();
+	}
+	
+	public static void Update(){ // function triggered every frame
+		//TODO: WRITE UPDATE CODE
+		
+		draw();
 	}
 
-	public static void render() {
-
+	public static void Draw() {
+		//TODO: DRAW ITEMS
 	}
 }
