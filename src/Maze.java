@@ -22,8 +22,15 @@ public class Maze extends JFrame {
 	public Node[] nodes;
 	public int entry, exit, entryl, exitl;
 	
+	public Maze(){
+		this(600, 400, 5);
+	}
 	
-	public Maze() {
+	public Maze(int width, int height, int tileSize) {
+		this.width = width;
+		this.height = height;
+		this.tileSize = tileSize;
+		
 		robot = new Robot(this);
 		
 		setTitle("Maze Game");
