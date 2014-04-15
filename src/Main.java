@@ -3,7 +3,9 @@ import javax.swing.JPanel;
 
 
 public class Main extends JFrame {
-	public Main(){
+	private static final long serialVersionUID = 1L;
+
+	public Main() {
 		setTitle(""); 
 		setSize(300, 200); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
@@ -12,9 +14,9 @@ public class Main extends JFrame {
 		setResizable(false);
 	}
 	
-	public static void main(String args[]){
+	public static void main(String args[]) {
 		JFrame frame = new Main();
 		frame.setVisible(true);
 		//new Maze();
-	} 
+	}
 }

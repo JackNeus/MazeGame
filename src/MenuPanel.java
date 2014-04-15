@@ -10,7 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 public class MenuPanel extends JPanel { 
-	 public MenuPanel() 
+	private static final long serialVersionUID = 1L;
+
+	public MenuPanel() 
 	 { 
 		 final TextField width, height, tile;
 		 
@@ -52,7 +54,7 @@ public class MenuPanel extends JPanel {
 		            	widthval = Integer.parseInt(width.getText());
 		            	heightval = Integer.parseInt(height.getText());
 		            	tileval = Integer.parseInt(tile.getText());
-		            	new Maze(widthval, heightval, tileval);
+		            	new Window(widthval, heightval, tileval);
 	            	} catch (NumberFormatException exception){
 	            		System.out.println("Please check your input");
 	            	}

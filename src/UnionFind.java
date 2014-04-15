@@ -44,22 +44,6 @@ public class UnionFind {
 		}
 	}
 	
-	/*public void floodfill(int key, int val) {
-		int old = component[val][1];
-		component[val][1] = key;
-		Maze.visited[val / m][val % m] = true;
-		for (int i = 0; i < 4; i++) {
-			int newx = val / m + dirx[i];
-			int newy = val % m + diry[i];
-			if (newx < 0 || newx >= n ||newy < 0 || newy >= m) {
-				continue;
-			}
-			if (!Maze.visited[newx][newy] && component[newx * m + newy][1] == old) {
-				floodfill(key, newx * m + newy);
-			}
-		}
-	} */
-
 	public void floodfill(int key, int val) {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {

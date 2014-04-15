@@ -4,11 +4,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Maze extends JFrame {
-	/*Window Variables*/
+public class Maze extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
+	/** Window Variables */
 	public int width = 600, height = 400, margin = 100, adjusty, adjustx;
 	public int tileSize = 5;
 	
@@ -36,18 +37,12 @@ public class Maze extends JFrame {
 		this.yTiles = height / tileSize;
 		
 		robot = new Robot(this);
+		setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
 		
-		setTitle("Maze Game");
-		JPanel jp = new JPanel();
-		jp.setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
-		jp.setBackground(Color.LIGHT_GRAY);
-		this.getContentPane().add(jp);
-		this.pack();
+		setBackground(Color.LIGHT_GRAY);
 		adjusty = margin + getInsets().top;
 		adjustx = margin + getInsets().left;
 		
-		setResizable(true);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		numNodes = xTiles * yTiles;
 		visited = new boolean[yTiles][xTiles];
@@ -186,11 +181,6 @@ public class Maze extends JFrame {
 		g2.setColor(Color.BLACK);
 		for(int i = 0; i < lines.length; i++) {
 			if(i == entryl || i == exitl) {
-				/*g2.setColor(Color.RED);
-				g2.draw(lines[i]);
-				if(i == entryl) g2.fillRect((int) lines[i].getX1() - 3, (int) lines[i].getY1(), (int) 3, (int) (lines[i].getY2() - lines[i].getY1()));
-				else g2.fillRect((int) lines[i].getX1(), (int) lines[i].getY1(), (int) 3, (int) (lines[i].getY2() - lines[i].getY1()));
-				g2.setColor(Color.BLACK);*/
 			}
 			else if(lines[i] != null) {
 				g2.draw(lines[i]);
