@@ -40,6 +40,7 @@ public class Maze extends JPanel {
 		setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
 		
 		setBackground(Color.LIGHT_GRAY);
+
 		adjusty = margin + getInsets().top;
 		adjustx = margin + getInsets().left;
 		
@@ -62,6 +63,8 @@ public class Maze extends JPanel {
 		setVisible(true);
 		solver = new MazeSolver(yTiles, xTiles);
 		solver.bfs(entry, exit);
+		robot = new Robot(this);
+		robotVisits = robot.solve();
 	}
 	
 	int dirs[];
@@ -173,6 +176,8 @@ public class Maze extends JPanel {
 		}
 	}
 	
+	int robotVisits[], robotProg = 0;
+	boolean ranOnce = false;
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
@@ -186,7 +191,21 @@ public class Maze extends JPanel {
 				g2.draw(lines[i]);
 			}
 		}
-		if(robot != null) robot.solve(g2);
+		g2.setColor(new Color(255, 255, 0, 64));
+		if(ranOnce){
+			robotProg = 0;
+		}
+		for(; robotProg < robotVisits.length; robotProg++){
+			if(robotVisits[robotProg] != -1){
+				g2.fillRect(robotVisits[robotProg] % xTiles * tileSize + adjustx, robotVisits[robotProg] / xTiles * tileSize + adjusty, tileSize, tileSize);
+				if(!ranOnce && robotProg % 5 == 0){
+					try {
+					Thread.sleep(0, 1);
+					} catch (InterruptedException e) {}
+				}
+			}
+		}
+		ranOnce = (robotProg == robotVisits.length);
 		drawPath(g2);
 	}
 }
