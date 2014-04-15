@@ -16,11 +16,15 @@ public class Robot {
 		dirs[3] *= maze.xTiles;
 	}
 	
-	public void solve(Graphics2D g2){
+	public int[] solve(){
+		int[] yellow = new int[maze.numNodes * 2];
+		int arrpos = 0;
+		for(int i = 0; i < yellow.length; i++){
+			yellow[i] = -1;
+		}
 		while(true){
-			g2.setColor(new Color(255, 255, 0, 64));
 			if(pos == maze.exit) break;
-			g2.fillRect(pos % maze.xTiles * maze.tileSize + maze.adjustx, pos / maze.xTiles * maze.tileSize + maze.adjusty, maze.tileSize, maze.tileSize);
+			yellow[arrpos++] = pos;
 			//System.out.println(pos + " " + dir);
 			int r = (dir + 1) % 4, l = dir - 1;
 			if(l == -1) l = 3;
@@ -39,6 +43,7 @@ public class Robot {
 				dir = (dir + 1) % 4;
 			}
 		}
+		return yellow;
 	}
 }
 

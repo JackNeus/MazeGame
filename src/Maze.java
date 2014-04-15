@@ -34,9 +34,7 @@ public class Maze extends JFrame {
 		this.tileSize = tileSize;
 		this.xTiles = width / tileSize;
 		this.yTiles = height / tileSize;
-		
-		robot = new Robot(this);
-		
+				
 		setTitle("Maze Game");
 		JPanel jp = new JPanel();
 		jp.setPreferredSize(new Dimension(margin + width + margin, margin + height + margin));
@@ -67,6 +65,8 @@ public class Maze extends JFrame {
 		setVisible(true);
 		solver = new MazeSolver(yTiles, xTiles);
 		solver.bfs(entry, exit);
+		robot = new Robot(this);
+		robotVisits = robot.solve();
 	}
 	
 	int dirs[];
@@ -178,7 +178,10 @@ public class Maze extends JFrame {
 		}
 	}
 	
+	int robotVisits[], robotProg = 0;
+	boolean ranOnce = false;
 	public void paint(Graphics g) {
+		System.out.println("painting");
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.WHITE);
@@ -196,7 +199,21 @@ public class Maze extends JFrame {
 				g2.draw(lines[i]);
 			}
 		}
-		if(robot != null) robot.solve(g2);
+		g2.setColor(new Color(255, 255, 0, 64));
+		if(ranOnce){
+			robotProg = 0;
+		}
+		for(; robotProg < robotVisits.length; robotProg++){
+			if(robotVisits[robotProg] != -1){
+				g2.fillRect(robotVisits[robotProg] % xTiles * tileSize + adjustx, robotVisits[robotProg] / xTiles * tileSize + adjusty, tileSize, tileSize);
+				if(!ranOnce){
+					try {
+					Thread.sleep(0, 1);
+					} catch (InterruptedException e) {}
+				}
+			}
+		}
+		ranOnce = (robotProg == robotVisits.length);
 		drawPath(g2);
 	}
 }
