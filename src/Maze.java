@@ -181,7 +181,6 @@ public class Maze extends JFrame {
 	int robotVisits[], robotProg = 0;
 	boolean ranOnce = false;
 	public void paint(Graphics g) {
-		System.out.println("painting");
 		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setColor(Color.WHITE);
@@ -206,7 +205,7 @@ public class Maze extends JFrame {
 		for(; robotProg < robotVisits.length; robotProg++){
 			if(robotVisits[robotProg] != -1){
 				g2.fillRect(robotVisits[robotProg] % xTiles * tileSize + adjustx, robotVisits[robotProg] / xTiles * tileSize + adjusty, tileSize, tileSize);
-				if(!ranOnce){
+				if(!ranOnce && robotProg % 5 == 0){
 					try {
 					Thread.sleep(0, 1);
 					} catch (InterruptedException e) {}
